@@ -1,11 +1,5 @@
 
-function git-init(){
-  git init
-  echo "Initializing with readme.md..."
-  touch readme.md
-  git add --all .
-  git commit -m 'First commit'
-
+function git-hook(){
   PRE_COMMIT_FILE=".pre-commit-config.yaml"
   if [ ! -f "$PRE_COMMIT_FILE" ]; then
     echo "Configuring pre-commit with default configuration..."
@@ -30,16 +24,25 @@ repos: []
 #!/bin/bash
 FILE=$1
 MESSAGE=$(cat $FILE)
-TICKET=$(git rev-parse --abbrev-ref HEAD | grep -Eo '^(\w+/)?(\w+[-_])?[0-9]+' | grep -Eo '(\w+[-])?[0-9]+' | tr "[:lower:]" "[:upper:]")
+TICKET=$(git rev-parse --abbrev-ref HEAD | grep -Eo '^(\w+/)?(\w+[-_])?[0-9]+' | grep -Eo '(\w+[-])?[0-9]+' | tr "[:lower:]" "[:upper:]"):
 if [[ $TICKET == "[]" || "$MESSAGE" == "$TICKET"* ]];then
   exit 0;
 fi
 
-echo "$TICKET: $MESSAGE" > $FILE
+echo "$TICKET $MESSAGE" > $FILE
   `
   echo "$HOOK_SCRIPT" > $HOOK_FILE
-  chmod +x $HOOK_FILE
+  chmod +x $HOOK_FILE  
+}
+
+function git-init(){
+  git init
+  echo "Initializing with readme.md..."
+  touch readme.md
+  git add --all .
+  git commit -m 'First commit'
+
+  git-hook
 
   echo "Done!"
 }
-alias git-init=git-init
