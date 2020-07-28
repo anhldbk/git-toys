@@ -14,6 +14,11 @@ I've fixed some compatiblity issues with the new version of pre-commit. To insta
 $ brew install pre-commit
 #
 $ cat scripts/git-init.sh >> ~/.zshrc
+$ source ~/.zshrc
 #
-# From now on, instead of `git init`, you should use `git-init`
+# From now on, to init a repo
+$ git-init
+
+# To install the commit hook into an existing repository
+$ git-install-commit-hook
 ```
