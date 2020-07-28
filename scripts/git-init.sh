@@ -1,5 +1,5 @@
 
-function git-hook(){
+function git-install-commit-hook(){
   PRE_COMMIT_FILE=".pre-commit-config.yaml"
   if [ ! -f "$PRE_COMMIT_FILE" ]; then
     echo "Configuring pre-commit with default configuration..."
@@ -42,7 +42,7 @@ function git-init(){
   git add --all .
   git commit -m 'First commit'
 
-  git-hook
+  git-install-commit-hook
 
   echo "Done!"
 }
