@@ -5,8 +5,16 @@
 # For example:
 # $ git-get-changes d4655069
 
-function git-get-changes(){
+function git-get-changes() {
   LAST_COMMIT_HASH="$@"
   PROJECT=${PROJECT:-DEV19}
-  git log  --oneline $LAST_COMMIT_HASH.. | awk -F"$PROJECT" 'NF!=0 {print $2}' | grep . | awk -F '-' '{ print $2 }' | sort  | uniq  | awk  '{ print "'$PROJECT'-"$0 }' |  tr '\n' ', ' | sed 's/.$//' | awk '{ print "key in ("$0 ")"}'
+  git log --oneline $LAST_COMMIT_HASH.. |
+    awk -F"$PROJECT" 'NF!=0 {print $2}' |
+    grep . |
+    awk -F '-' '{ print $2 }' |
+    awk -F ':' '{ print $1 }' |
+    sort | uniq |
+    awk '{ print "'$PROJECT'-"$0 }' |
+    tr '\n' ', ' | sed 's/.$//' |
+    awk '{ print "key in ("$0 ")"}'
 }
